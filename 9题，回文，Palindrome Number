@@ -1,0 +1,38 @@
+9题，回文，Palindrome Number
+判断一个整数是否是回文，比如121，是，123，不是，就是从左到右和从右到左是一样的
+
+最开始的思路是用^，取异或，因为a^a=0, a^0=a 所以想法是把每一位都异或一遍，如果最后为0的话，就是回文，
+但是这样有一个很大的问题，就是比如1122，这个异或出来一定是0，但不是回文，所以不能用这种解法
+
+后来又想了用栈，后进先出的算法，然后把数字转字符，取char 存栈，后进先出，这样123，出来后就变成了’3‘，‘2’，‘1’，再组合起来比较就好了
+因为入栈顺序是先‘1’ 再‘2’ 再‘3’，算法如下
+class Solution {
+    public boolean isPalindrome(int x) {
+        if (x<0) return false;
+        char[] cArray = String.valueOf(x).toCharArray();
+        int result = 0;
+        if (cArray.length==1)
+        {
+            return true;
+        }
+        
+        Stack stack = new Stack();
+        for (int i=0;i<=cArray.length-1;i++)
+        {
+            stack.push(cArray[i]);
+        }
+        String s = "";
+        while(!stack.empty())
+        {
+            s = s + stack.pop().toString();
+        }
+        if (s.equals(String.valueOf(x)))
+            return true;
+        else 
+            return false;
+    }
+}
+
+时间复杂度，2n ，循环了2次
+空间复杂度，
+
