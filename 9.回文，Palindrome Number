@@ -37,7 +37,7 @@ class Solution {
 空间复杂度，
 
 ----------------------
-另一种做法是把int 转乘string，然后在一个loop 里取头取尾字符，然后比较，然后再缩减字符串（去头去尾）
+另一种做法是把int 转乘string，然后在一个loop 里取头取尾字符，然后比较，然后再缩减字符串（去头去尾),这种做法的好处是从字符的2边一起访问，时间复杂度是n/2
 
 class Solution {
     public boolean isPalindrome(int x) {
@@ -63,4 +63,5 @@ class Solution {
         return true;
     }
 }
+
 
