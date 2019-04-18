@@ -1,0 +1,50 @@
+13. Roman to Integer
+
+我的思路是截取字符串最后2位，如果右边大于左边（正常应该左边大于右边）那么说明这个数是2个相减得到的
+
+
+class Solution {
+    HashMap<String,Integer> map = new HashMap();
+    public int romanToInt(String s) {
+        initMap();
+        int result = 0;        
+        int last = 0;
+        int pre = 0;
+        
+        while(s.length()>0)
+        {
+            if (s.length()==1)
+            {
+                result = result + map.get(s);
+                break;
+            }
+            
+            last = map.get(s.substring(s.length()-1));
+            pre = map.get(s.substring(s.length()-2,s.length()-1));
+            if (pre<last)
+            {
+                result = result + last - pre;
+                s = s.substring(0,s.length()-2);
+            }
+            else
+            {
+                result = result + last;
+                s = s.substring(0,s.length()-1);
+            }
+        
+        }
+        return result;
+        
+    }
+    
+    private void initMap()
+    {
+        map.put("I",1);
+        map.put("V",5);
+        map.put("X",10);
+        map.put("L",50);
+        map.put("C",100);
+        map.put("D",500);
+        map.put("M",1000); 
+    }
+}
