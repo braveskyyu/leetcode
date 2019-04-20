@@ -5,8 +5,8 @@
 假设数组的长度是m，数组里每个字符串的最大长度是n
 
 后来看了solution后，有这样一种算法，先找出数组里最小长度字符长度（个人觉得如果数组长度特别长的话，可以忽略这步，因为先要做一次loop），
-然后用bts算法算出字符串的middle 位，然后去数组里比较，看能否找出common prefix，如果能的话，
-low=middle+1，如果不能的话，high=middle-1 ，然后再去找。时间复杂度是m*logn(	因为是bts算法)
+然后算出字符串的middle 位，然后去数组里比较，看能否找出common prefix，如果能的话，
+low=middle+1，如果不能的话，high=middle-1 ，然后再去找。时间复杂度是m*logn(因为是bts算法)
 
 
 class Solution {
