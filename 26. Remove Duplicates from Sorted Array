@@ -1,0 +1,24 @@
+26. Remove Duplicates from Sorted Array
+Given a sorted array nums, remove the duplicates in-place such that each element appear only once and return the new length.
+
+Do not allocate extra space for another array, you must do this by modifying the input array in-place with O(1) extra memory.
+
+
+想了一会，没想出什么好办法，最开始的想法是用set，去重，然后再转乘array，然后再用arrays.sort 排序，但是这样效率太差，后来看了高赞答案，如下，能想出这个的太🐂了
+思路是用2个指针，第一个指针是用来判断数组里2个相邻元素是否相等，如果相等，指针不变，不等，指针前移（加一），这样数组元素的位置也变了，然后用来和第2个指针也就是j里的元素比较，如果2个元素不想等，就替换掉当前的。
+
+class Solution {
+    public int removeDuplicates(int[] nums) {            
+        if (nums==null || nums.length==0) return 0;
+        int i=0;
+        for (int j=1;j<nums.length;j++)
+        {
+            if (nums[i]!=nums[j])
+            {
+                i++;
+                nums[i]=nums[j];
+            }
+        }
+        return i+1; 
+    }
+}
