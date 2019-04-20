@@ -1,0 +1,62 @@
+20. Valid Parentheses
+
+Given a string containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.
+
+An input string is valid if:
+
+Open brackets must be closed by the same type of brackets.
+Open brackets must be closed in the correct order.
+Note that an empty string is also considered valid.
+
+这道题花了很长时间去想，多于2个小时，最开始的想法有问题，只考虑了{([])}这种情况，没考虑{}[]()这种情况，后来的想法是字符串里一定包含至少一个相邻的[]或{}或(), 只要找到，然后去除，然后再递归，就可以解开，可是后来想了很久没做出来，没办法只能看答案，看到stack，后进先出的做法，有了点思路，给出了下面的解决
+
+class Solution {    
+    
+    public boolean isValid(String s) {
+        if (s==null || s.length()==0 )
+            return true;
+ 
+        if (s.length()%2!=0)
+        {
+            return false;
+        }        
+        
+        HashMap<Character,Character> map = new HashMap();
+        map.put('}','{');
+        map.put(')','(');
+        map.put(']','[');        
+    
+        char item;
+        
+        Stack<Character> stack = new Stack<Character>();
+        for (int i=0;i<s.length();i++)
+        {
+            if (isOpenBracket(s.charAt(i)))
+            {
+                stack.push(s.charAt(i));
+            }
+            else
+            {
+                if (stack.empty()) return false;
+                item = stack.pop();
+                if (map.get(s.charAt(i))!=item)
+                {
+                    return false;
+                }
+            }
+        } 
+        if (stack.empty())
+            return true;
+        else
+            return false;
+    } 
+    
+    private boolean isOpenBracket(char c)
+    {
+        if (c=='{' || c=='[' || c=='(')
+            return true;
+        else
+            return false;
+    }   
+}
+
