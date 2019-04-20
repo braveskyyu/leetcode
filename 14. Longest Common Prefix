@@ -1,0 +1,59 @@
+14. Longest Common Prefix
+找出一段数组里common 的prefix
+
+最开始的想法或者说最笨的想法是做循环比较，比如数组元素1和2比较找出common prefix，然后再用common prefix和数组其他元素比较，时间复杂度是n*m
+假设数组的长度是m，数组里每个字符串的最大长度是n
+
+后来看了solution后，有这样一种算法，先找出数组里最小长度字符长度（个人觉得如果数组长度特别长的话，可以忽略这步，因为先要做一次loop），
+然后用bts算法算出字符串的middle 位，然后去数组里比较，看能否找出common prefix，如果能的话，
+low=middle+1，如果不能的话，high=middle-1 ，然后再去找。时间复杂度是m*logn(	因为是bts算法)
+
+
+class Solution {
+    public String longestCommonPrefix(String[] strs) {
+       
+        if (strs == null || strs.length==0)
+            return "";
+        else if (strs.length==1)
+            return strs[0];
+        
+        //to get the shortest string in the array, 
+        //but if the array is very long, do not use this 
+        int minLength =strs[0].length();
+        for (int i=1;i<strs.length;i++)
+        {
+            minLength = Math.min(minLength,strs[i].length());
+        }
+        
+        int low=0;
+        int high = minLength;
+        int middle = 0;
+        while (low<=high)
+        {
+            middle = (low+high)/2;
+            if (isFind(strs,middle))
+            {
+                low = middle+1;                 
+            }
+            else
+            {
+                high = middle-1;                
+            }
+        }
+        
+        return strs[0].substring(0,(low+high)/2);
+    }
+    
+    private boolean isFind(String[] strs, int len)
+    {
+        String first = strs[0].substring(0,len);
+        for (int i=1;i<strs.length;i++)
+        {
+            if (!strs[i].startsWith(first))
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+}
