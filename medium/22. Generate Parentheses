@@ -2,8 +2,102 @@
 
 这题最开始的想法是用bfs.
 难点是如何判断给定的string是否是合法的，有几点需要检查:
-1. "(" 最多只能有n 个
-2. ")" 最多只能有n 个
-3. "(" 作为开始的第一个字符
-4. 任何一个时间内不能有")" 在前面, "(" 在后边，也就是说不能有")"的个数大于"("
 
+	1. "(" 最多只能有n 个
+	2. ")" 最多只能有n 个
+	3. "(" 作为开始的第一个字符
+	4. 任何一个时间内不能有")" 在前面, "(" 在后边，也就是说不能有")"的个数大于"("
+
+我的想法是定义一个Prenthese的类，这个里面会有一个add 方法每次加"("和")" 同时会有2个int 的value记录
+左右括号的个数，这样每次通过这2个参数的检查就可以验证上面的4点， 详细code如下:
+
+```java
+class Solution {
+    public List<String> generateParenthesis(int n) 
+    {        
+        List<String> list = new ArrayList();
+        if (n<=0) return list;
+        Queue q = new LinkedList();    
+        Prenthese pt = new Prenthese(n); 
+        pt.add("(");
+        q.offer(pt);
+        
+        for (int i=0;i<2*n-1;i++)
+        {        
+            int size = q.size();                        
+            for (int j=0;j<size;j++)
+            {                
+                Prenthese ori = (Prenthese)q.poll();
+                Prenthese newpt = null;
+                try
+                {
+                    newpt = (Prenthese)ori.clone();
+                }
+                catch(Exception ex)
+                {
+                    
+                }
+                newpt.add("(");
+                if (newpt.isValid())
+                    q.offer(newpt);
+                ori.add(")");
+                if (ori.isValid())
+                    q.offer(ori);
+            }
+        }
+        
+        int size = q.size();
+        
+        for (int i=0;i<size;i++)
+        {
+            list.add(((Prenthese)q.poll()).toString());
+        }
+        return list;
+    }        
+}
+
+class Prenthese implements Cloneable 
+{
+    private int leftParenthese = 0;
+    private int rightParenthese = 0;
+    private int count = 0; 
+    private String str = "";
+    
+    public Prenthese(int n)
+    {
+        this.count = n;
+    }
+    
+    public void add(String str)
+    {
+        if ("(".equals(str))
+        {
+            leftParenthese++;
+        }
+        else if (")".equals(str))
+        {
+            rightParenthese++;
+        }
+        this.str+=str;        
+    }
+    
+    public boolean isValid()
+    {
+        if (leftParenthese>count || rightParenthese>count || rightParenthese>leftParenthese)
+            return false;
+        else
+            return true;
+    }
+        
+    public String toString()
+    {
+        return this.str;
+    }
+    
+    @Override
+    public Object clone() throws CloneNotSupportedException 
+    {
+    	return super.clone();
+    }    
+}
+```
